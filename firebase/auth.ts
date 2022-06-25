@@ -2,6 +2,7 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut,
 } from "firebase/auth";
 import { setDoc, doc, getDoc } from "@firebase/firestore";
 import { db } from "./clientApp";
@@ -15,8 +16,6 @@ const registerCustomer = async (email, password, phone, name) => {
       email,
       password
     );
-
-    console.log("user created", userCredential);
 
     await setDoc(doc(db, "users", email), {
       email,
@@ -44,8 +43,6 @@ const registerOwner = async (email, password, phone, name, address) => {
       email,
       password
     );
-
-    console.log("user created", userCredential);
 
     await setDoc(doc(db, "users", email), {
       email,
@@ -75,8 +72,6 @@ const login = async (email, password) => {
       password
     );
 
-    console.log("signed in user", userCredential);
-
     const docRef = doc(db, "users", email);
     const docSnap = await getDoc(docRef);
 
@@ -84,6 +79,11 @@ const login = async (email, password) => {
   } catch (e) {
     throw new Error(e);
   }
+};
+
+const logout = () => {
+  const auth = getAuth();
+  signOut(auth);
 };
 
 export { registerCustomer, registerOwner, login };

@@ -62,6 +62,7 @@ const Button = styled.button`
 function Register() {
   const [email, setEmail, updateEmail] = useInput("");
   const [password, setPassword, updatePassword] = useInput("");
+
   const onSubmit = async (event) => {
     event.preventDefault();
 
